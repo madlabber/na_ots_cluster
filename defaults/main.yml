@@ -101,8 +101,11 @@ cluster_dns_domains:
 # Networks
 # --------
 mgt_network: Management
+mgt_network_vlan:
 data_network: Data
+data_network_vlan:
 internal_network: Internal
+internal_network_vlan: 
 
 # --------
 # Instance
