@@ -137,13 +137,13 @@ cluster_nodes:
     storage_pool:
     capacityTB: 3
     host_name: 
-    swraid: false
+    software_raid: false
   - node_name: "{{ cluster_name }}-02"
     ipAddress: 
     storage_pool:
     capacityTB: 3
     host_name: 
-    swraid: false
+    software_raid: false
 
 # ------------------------------------------
 # Capacity Conversion Values

@@ -90,7 +90,7 @@
     label: "{{ item.node_name }} ({{ item.storage_pool }})"
   when:
     - outeritem.node_name == item.node_name
-    - item.swraid is not true
+    - item.software_raid is not true
 
   register: configure_node_storage_response
 
@@ -117,7 +117,7 @@
     label: "{{ item.node_name }} ({{ item.storage_pool }})"
   when:
     - outeritem.node_name == item.node_name
-    - item.swraid | default(false)
+    - item.software_raid | default(false)
 
   register: configure_node_storage_response
 
@@ -133,6 +133,6 @@
     label: "{{ item.node_name }} ({{ item.storage_pool }})"
   when:
     - outeritem.node_name == item.node_name
-    - item.swraid | default(false)
+    - item.software_raid | default(false)
 
   register: configure_node_storage_response
