@@ -155,7 +155,7 @@ This role assumes that the `na_ots_deploy` role (or the manual equivalent) has a
 I use global files to hold variables.
 ```yaml
 node_count: 2
-monitor_job: true
+monitor_deploy_job: true
 deploy_api_url: "https://xx.xxx.xx.xx/api/v3"
 deploy_login: "admin"
 vcenter_login: "yourvclogin@yourlab.local"
