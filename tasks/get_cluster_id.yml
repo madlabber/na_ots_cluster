@@ -25,3 +25,4 @@
 
   set_fact:
     cluster_id: "{{ cluster_get_response.json.records.0.id }}"
+  when: cluster_get_response.json.records.0.id is defined
