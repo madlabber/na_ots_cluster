@@ -1,4 +1,16 @@
 # -------------------------------------------------------------------
+# state:
+# - present : create cluster
+# - absent  : delete cluster
+# - hosts_present : registers hosts with deploy without building a cluster
+# - hosts_absent  : deletes hosts from deploy without building a cluster
+# - power_on  : powers on existing cluster
+# - power_off : shut down running cluster
+# - constructing : creates cluster but does not deploy it
+# -------------------------------------------------------------------
+state: present
+
+# -------------------------------------------------------------------
 # Passwords 
 # - Place these in a separate file and implement encryption if needed
 # -------------------------------------------------------------------
@@ -41,6 +53,8 @@ monitor_host_retries: 10
 monitor_host_delay: 15
 monitor_netcheck_retries: 30
 monitor_netcheck_delay: 60
+monitor_availability_retries: 30
+monitor_availability_delay: 60
 
 # ----------------------------------------------------------------------
 # Network Connectivity Check
@@ -111,6 +125,7 @@ internal_network_vlan:
 # Instance
 # --------
 instance_type: small
+cpu_reservation_percentage: 100
 
 # --------------------------------------------------
 # Node Info
@@ -122,11 +137,13 @@ cluster_nodes:
     storage_pool:
     capacityTB: 3
     host_name: 
+    swraid: false
   - node_name: "{{ cluster_name }}-02"
     ipAddress: 
     storage_pool:
     capacityTB: 3
     host_name: 
+    swraid: false
 
 # ------------------------------------------
 # Capacity Conversion Values

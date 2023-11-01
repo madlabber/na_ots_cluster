@@ -19,6 +19,7 @@
         id: "{{ lookup('template', 'host2id.j2') | trim }}"
       ip: "{{ item.ipAddress }}"
       passthrough_disks: false
+      cpu_reservation_percentage: '{{cpu_reservation_percentage}}'
     body_format: json
     user: "{{ deploy_login }}"
     password: "{{ deploy_pwd }}"
