@@ -15,6 +15,19 @@ host_esx_password: ""
 host_kvm_password: ""
 ```
 ```yaml
+# -------------------------------------------------------------------
+# state:
+# - present : create cluster
+# - absent  : delete cluster
+# - hosts_present : registers hosts with deploy without building a cluster
+# - hosts_absent  : deletes hosts from deploy without building a cluster
+# - power_on  : powers on existing cluster
+# - power_off : shut down running cluster
+# - constructing : creates cluster but does not deploy it
+# -------------------------------------------------------------------
+state: present
+```
+```yaml
 # ----------------------------------------------------------------
 # Configuration Settings
 # - Place these variables in a separate .yml file and reference in
@@ -39,8 +52,11 @@ monitor_deploy_retries: <Number of retries until cluster creation succeeds or fa
 monitor_deploy_delay: <Delay in seconds between monitor retries>
 monitor_netcheck_retries: <Number of retries until network check succeeds or fails>
 monitor_netcheck_delay: <Delay in seconds between netcheck retries>
+monitor_host_retries: <Number of retries until host add/delete succeeds or fails>
+monitor_host_delay: <Delay in seconds between host retries>
+monitor_availability_retries: <Number of retries until cluster availability succeeds or fails>
+monitor_availability_delay: <Delay in seconds between availability retries>
 ```
-
 ```yaml
 # ----------------------------------------------------------------------
 # Network Connectivity Check
@@ -95,7 +111,7 @@ cluster_name:
 cluster_ip:
 cluster_netmask:
 cluster_gateway:
-cluster_ontap_image: "9.5P1"
+cluster_ontap_image: "9.14.1"
 cluster_ntp:
   -
 cluster_dns_ips:
@@ -108,8 +124,11 @@ cluster_dns_domains:
 # Networks
 # --------
 mgt_network: Management
+mgt_network_vlan:
 data_network: Data
+data_network_vlan:
 internal_network: Internal
+internal_network_vlan: 
 ```
 ```yaml
 # --------
@@ -133,6 +152,28 @@ cluster_nodes:
     storage_pool:
     capacityTB: 3
     host_name:
+# --------------------------------------------------
+# Node Info
+# - options for software raid
+# --------------------------------------------------
+  - node_name: "{{ cluster_name }}-03"
+    ipAddress:
+    storage_pool:
+    host_name:
+    software_raid: true
+  - node_name: "{{ cluster_name }}-04"
+    ipAddress:
+    storage_pool:
+    host_name:
+    software_raid: true
+    host_disks:   # optionally specify which disks to use
+      - "/dev/disk/by-id/ata-SAMSUNG_MZ7LM960HMJP-00005_S2TZNB0J201172"
+      - "/dev/disk/by-id/ata-SAMSUNG_MZ7LM960HMJP-00005_S2TZNB0J201489"
+      - "/dev/disk/by-id/ata-SAMSUNG_MZ7LM960HMJP-00005_S2TZNB0J201513"
+      - "/dev/disk/by-id/ata-SAMSUNG_MZ7LM960HMJP-00005_S2TZNB0J201701"
+      - "/dev/disk/by-id/ata-SAMSUNG_MZ7LM960HMJP-00005_S2TZNB0J201401"
+      - "/dev/disk/by-id/ata-SAMSUNG_MZ7LM960HMJP-00005_S2TZNB0J201472"
+
 ```
 # Dependencies
 This role assumes that the `na_ots_deploy` role (or the manual equivalent) has already been run and the deploy VM is running.

@@ -90,7 +90,7 @@
     label: "{{ item.node_name }} ({{ item.storage_pool }})"
   when:
     - outeritem.node_name == item.node_name
-    - item.software_raid is not true
+    - item.software_raid | default(false) is not true
 
   register: configure_node_storage_response
 
